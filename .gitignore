@@ -7,6 +7,9 @@ ipch/
 Release/
 Debug/
 *.dll
+res/
+lib/
+include/
 
 #ignore thumbnails created by windows
 Thumbs.db
