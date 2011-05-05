@@ -12,6 +12,9 @@
 #ifndef HSTEFAN_GAMEWORLD_HPP
 #define HSTEFAN_GAMEWORLD_HPP
 
+#include <deque>
+#include "GameObject.hpp"
+
 namespace hstefan
 {
 
@@ -29,6 +32,8 @@ public:
    void update();
    void render();
 
+   void addObject(GameObject* gam);
+
 private:
    GameWorld() 
    {}
@@ -36,6 +41,7 @@ private:
    GameWorld& operator=(const GameWorld& game);
 
    static GameWorld* _instance;
+   std::deque<GameObject*> game_objs;
 };
 
 } //namespace game
