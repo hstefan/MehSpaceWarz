@@ -21,7 +21,13 @@ namespace game
 class GameWorld
 {
 public:
-   static GameWorld* getInstance();
+   static GameWorld* getInstance()
+   {
+      return _instance;
+   }
+
+   void update();
+   void render();
 
 private:
    GameWorld() 
