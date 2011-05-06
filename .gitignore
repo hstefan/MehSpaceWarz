@@ -10,6 +10,8 @@ Debug/
 res/
 lib/
 include/
+bin/
+obj/
 
 #ignore thumbnails created by windows
 Thumbs.db
