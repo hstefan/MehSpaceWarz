@@ -15,7 +15,7 @@
 #include <cstdlib>
 
 
-int main(int argc, char* argv[])
+int main()
 {
    glfwInit();
    glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
