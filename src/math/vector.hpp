@@ -93,19 +93,19 @@ inline char quadrant(const vec2& vec)
 } //namespace hstefan
 #ifdef _DEBUG
 template <unsigned int M, unsigned int N>
-std::ostream& operator<<(std::ostream& out, const base::matrix<M, N>& m)
+std::ostream& operator<<(std::ostream& out, const hstefan::math::matrix<M, N>& m)
 {
-out << "(";
-for(unsigned int i = 0; i < M; ++i)
-{
-   out << m[i];
-   if(i + 1 == M)
-      out << ")";
-   else
-      out << ",";
-}
+	out << "(";
+	for(unsigned int i = 0; i < M; ++i)
+	{
+		out << m[i];
+		if(i + 1 == M)
+			out << ")";
+		else
+			out << ",";
+	}
 
-return out;
+	return out;
 }
 #endif
 

@@ -9,7 +9,6 @@
  *   furnished to do so, subject to the following conditions:
  */
 
-
 #include <GL/glfw.h>
 #include "GameWorld.hpp"
 #include <ctime>
