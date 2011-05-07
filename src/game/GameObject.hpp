@@ -24,6 +24,7 @@ class GameObject
 public:
    virtual void update() = 0;
    virtual void render() = 0;
+   virtual bool done() = 0;
 };
 
 } //namespace game
