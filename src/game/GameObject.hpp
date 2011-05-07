@@ -12,8 +12,6 @@
 #ifndef HSTEFAN_GAMEOBJECT_HPP
 #define HSTEFAN_GAMEOBJECT_HPP
 
-#include "../math/vector.hpp"
-
 namespace hstefan
 {
 namespace game
