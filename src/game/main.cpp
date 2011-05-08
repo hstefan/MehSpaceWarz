@@ -25,8 +25,7 @@
 #include "../math/vector.hpp"
 #include <ctime>
 #include <cstdlib>
-#include <GL/glu.h>
-
+//#include <GL/glu.h>
 
 int main()
 {
@@ -52,11 +51,11 @@ int main()
    double cur_time = 0;
    glClearColor(0.f, 0.f, 0.f, 1.f);
    glMatrixMode(GL_PROJECTION);
-   //glPushMatrix();
+   glPushMatrix();
    glLoadIdentity();
-   //float proj[16] = {2/800, 0, 0, 0, 0, 2/800, 0, 0, 0, 0, 1, 0, -400, -400, 0, 1};
-   //glLoadMatrixf(proj);
-   gluOrtho2D(0, 800, 0, 800);
+   float proj[16] = {2/800, 0, 0, 0, 0, 2/800, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1};
+   glLoadMatrixf(proj);
+   //gluOrtho2D(0, 800, 0, 800);
    while(running) 
    {
       cur_time = glfwGetTime();
