@@ -33,7 +33,7 @@ using namespace math;
 
 PlayerShip::PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h)
    : Ship(NUM_LIFES, HITPOINTS, 0.f, makeVec(0.f, 1.f, 1.f), pos, screen_w, screen_h),
-   rot_queue(), rot_angle(0)
+   rot_queue(), rot_angle(0), max_speed(2.5f), handling(.05f)
 {
    vertex[0] = makeVec(-SHIP_WIDTH/2, SHIP_HEIGHT/2, 1);
    vertex[1] = makeVec(-SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
@@ -44,20 +44,18 @@ void PlayerShip::update()
 {
    if(glfwGetKey(GLFW_KEY_UP) == GLFW_PRESS) 
    {
-      std::cout << "up pressed" << std::endl;
-   } 
-   else if(glfwGetKey(GLFW_KEY_DOWN) == GLFW_PRESS) 
-   {
-      std::cout << "down pressed" << std::endl;
+     speed += 0.1;
+     if(speed > max_speed)
+        speed = max_speed;
    }
-   else if(glfwGetKey(GLFW_KEY_LEFT) == GLFW_PRESS)
-   {
+   //if(glfwGetKey(GLFW_KEY_DOWN) == GLFW_PRESS)
+   //   std::cout << "down pressed" << std::endl;
+   if(glfwGetKey(GLFW_KEY_LEFT) == GLFW_PRESS)
       rot_queue.push(LEFT_ROTATION_ID); 
-   }
-   else if(glfwGetKey(GLFW_KEY_RIGHT) == GLFW_PRESS)
-   {
+   if(glfwGetKey(GLFW_KEY_RIGHT) == GLFW_PRESS)
       rot_queue.push(RIGHT_ROTATION_ID);
-   }
+   
+   pos += dir*speed;
 }
 
 void PlayerShip::render()
@@ -65,15 +63,16 @@ void PlayerShip::render()
    while(!rot_queue.empty())
    {
       if(rot_queue.front() == LEFT_ROTATION_ID) 
-         rot_angle += 0.1f;
+         rot_angle += handling;
       else
-         rot_angle -= 0.1f;
+         rot_angle -= handling;
       rot_queue.pop();
    }
    if(rot_angle >= 360.f)
       rot_angle -= 360;
 
    math::mat3d rot = math::rotMat2dh(rot_angle);
+   dir = rot*math::makeVec(1, 0, 1);
    math::mat3d trans = math::transMat2dh(pos[0], pos[1]);
    math::mat3d scale = math::scaleMat2dh((float)screen_w/SHIP_WINDOW_WIDTH, 
          (float)screen_h/SHIP_WINDOW_HEIGHT);
