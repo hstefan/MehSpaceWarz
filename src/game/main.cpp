@@ -49,10 +49,14 @@ int main()
    double update_interval = 1.f/90.f;
 
    double cur_time = 0;
-
+   glClearColor(0.f, 0.f, 0.f, 1.f);
    while(running) 
    {
       cur_time = glfwGetTime();
+      
+      glfwSwapBuffers();
+      
+      glClear(GL_COLOR_BUFFER_BIT);   
       if(glfwGetKey(GLFW_KEY_ESC) == GLFW_PRESS) 
          break;
       if(cur_time - last_render > frame_interval) 
@@ -61,15 +65,12 @@ int main()
          world->render();
       }
       
-     
       if(cur_time - last_update > update_interval)
       {
          world->update();
          last_update = glfwGetTime();
       }
-
       glfwSleep(update_interval - (cur_time + glfwGetTime()));
-      glfwSwapBuffers();
       running = glfwGetWindowParam(GLFW_OPENED) != 0;
    }
 
