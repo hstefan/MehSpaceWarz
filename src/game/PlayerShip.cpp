@@ -64,9 +64,7 @@ void PlayerShip::render()
    math::mat3d trans = math::transMat2dh(pos[0], pos[1]);
    vec3 buff[4];
    for(unsigned int i = 0; i < 4; ++i)
-   {
       buff[i] = trans*vertex[i];
-   }
 
    glColor3f(1.f, 0.f, 0.f);
    glBegin(GL_QUADS);
@@ -75,7 +73,6 @@ void PlayerShip::render()
       glVertex2i(buff[2][0], buff[2][1]);
       glVertex2i(buff[3][0], buff[3][1]);
    glEnd();
-   std::cout << "desenhou";
 }
 
 } //namespace game

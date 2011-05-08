@@ -20,7 +20,7 @@ EXTRA_CXXFLAGS += -pedantic -Wall -Wextra `pkg-config --cflags libglfw`
 
 ALL_CXXFLAGS += -MMD -I./src -DTARGET_$(PLATFORM) $(EXTRA_CXXFLAGS) $(CXXFLAGS)
 ALL_LDFLAGS += $(LDFLAGS)
-LDLIBS += -lm -lpng `pkg-config --libs libglfw`
+LDLIBS += -lm -lpng -lGLU `pkg-config --libs libglfw`
 
 # RULES ####################################################
 
