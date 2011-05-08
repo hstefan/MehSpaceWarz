@@ -30,18 +30,23 @@ namespace game
    class Ship : public GameObject
    {
    public:
-      Ship(unsigned int lifes, unsigned int hp);
+      Ship(unsigned int lifes, unsigned int hp, float speed, const math::vec3& dir,
+            const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
 
       virtual void update() = 0;
       virtual void render() = 0;
       bool done();
+
    protected:
       unsigned int lifes;
       unsigned int hp;
       float speed;
       
       math::vec3 dir;
-      math::vec2 pos;
+      math::vec3 pos;
+
+      const unsigned int screen_w;
+      const unsigned int screen_h;
    };
 
 } //namespace game
