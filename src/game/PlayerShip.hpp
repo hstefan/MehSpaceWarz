@@ -23,6 +23,7 @@
 #include "Ship.hpp"
 #include "../math/vector.hpp"
 #include <queue>
+#include <map>
 
 namespace hstefan
 {
@@ -44,14 +45,27 @@ namespace game
        PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
       void update();
       void render();
+
+      struct ratio_info
+      {
+         float max;
+         float acc;
+         float breaking;
+      };
+
    protected:
       void checkPosition();
    private:
       std::queue<char> rot_queue;
+      std::map<unsigned int, ratio_info> transmission;
+      unsigned int ratio;
+      ratio_info* cur_ratio;
       float rot_angle;
       const float max_speed;
       const float handling;
       math::vec3 vertex[3];
+      bool increase_ratio;
+      bool decrease_ratio;
    };
 
 } //namespace game

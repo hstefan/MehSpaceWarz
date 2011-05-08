@@ -33,23 +33,36 @@ using namespace math;
 
 PlayerShip::PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h)
    : Ship(NUM_LIFES, HITPOINTS, 0.f, makeVec(0.f, 1.f, 1.f), pos, screen_w, screen_h),
-   rot_queue(), rot_angle(0), max_speed(5.f), handling(.05f)
+   rot_queue(), transmission(), ratio(0), cur_ratio(0), rot_angle(0), max_speed(8.f), 
+   handling(.05f), increase_ratio(false), decrease_ratio(false)
 {
    vertex[0] = makeVec(-SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
    vertex[1] = makeVec(0.f, SHIP_HEIGHT/2, 1);
    vertex[2] = makeVec(SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
+
+   ratio_info r1 = {2.5f, 0.1f, 0.035f};
+   ratio_info r2 = {4.2f, 0.07f, 0.030f};
+   ratio_info r3 = {6.0f, 0.05f, 0.025f};
+   ratio_info r4 = {8.0f, 0.04f, 0.02f};
+
+   transmission[0] = r1;
+   transmission[1] = r2;
+   transmission[2] = r3;
+   transmission[3] = r4;
+
+   cur_ratio = & transmission[ratio];
 }
 void PlayerShip::update() 
 {
    if(glfwGetKey(GLFW_KEY_UP) == GLFW_PRESS) 
    {
-     speed += 0.08f;
-     if(speed > max_speed)
-        speed = max_speed;
+     speed += cur_ratio->acc;
+     if(speed > cur_ratio->max)        
+        speed = cur_ratio->max;
    }
    else
    {
-      speed -= 0.02f;
+      speed -= cur_ratio->breaking;
       if(speed < 0.f)
          speed = 0.f;
    }
@@ -59,7 +72,29 @@ void PlayerShip::update()
       rot_queue.push(LEFT_ROTATION_ID); 
    if(glfwGetKey(GLFW_KEY_RIGHT) == GLFW_PRESS)
       rot_queue.push(RIGHT_ROTATION_ID);
-    
+   if(increase_ratio && glfwGetKey('A') == GLFW_RELEASE)
+   {
+      if(ratio < 3)
+      {
+         ++ratio;
+         cur_ratio = &transmission[ratio];
+      }
+      increase_ratio = false;
+   }
+   if(decrease_ratio && glfwGetKey('D') == GLFW_RELEASE)
+   {
+      if(ratio > 0)
+      {
+         --ratio;
+         cur_ratio = &transmission[ratio]; 
+      } 
+      decrease_ratio = false;
+   }
+   if(!increase_ratio && glfwGetKey('A') == GLFW_PRESS)
+      increase_ratio = true;
+   if(!decrease_ratio && glfwGetKey('D') == GLFW_PRESS)
+      decrease_ratio = true;
+
    pos += dir*speed;
    checkPosition();
 }
@@ -84,8 +119,8 @@ void PlayerShip::render()
          (float)screen_h/SHIP_WINDOW_HEIGHT);
 
    math::mat3d res = trans*rot*scale;
-   math::vec3 buff[4];
-   for(unsigned int i = 0; i < 4; ++i)
+   math::vec3 buff[3];
+   for(unsigned int i = 0; i < 3; ++i)
       buff[i] = res*vertex[i];
 
    glColor3f(1.f, .3f, 0.f);
