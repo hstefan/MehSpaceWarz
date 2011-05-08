@@ -66,7 +66,6 @@ void PlayerShip::render()
    for(unsigned int i = 0; i < 4; ++i)
    {
       buff[i] = trans*vertex[i];
-      //std::cout << buff[i][0] << "," << buff[i][1] << std::endl;
    }
 
    glColor3f(1.f, 0.f, 0.f);
