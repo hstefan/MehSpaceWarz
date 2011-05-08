@@ -29,16 +29,19 @@
 
 int main()
 {
+   static const int WINDOW_HEIGHT = 600;
+   static const int WINDOW_WIDTH = 600;
    glfwInit();
    glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
-   glfwOpenWindow(800, 800, 8, 8, 8, 8, 24, 8, GLFW_WINDOW);
+   glfwOpenWindow(WINDOW_HEIGHT, WINDOW_WIDTH, 8, 8, 8, 8, 24, 8, GLFW_WINDOW);
 
    using hstefan::game::GameWorld;
    using hstefan::game::PlayerShip;
    using namespace hstefan::math;
 
    GameWorld* world = GameWorld::getInstance();
-   PlayerShip* ship = new PlayerShip(makeVec(400,400,1), 800, 800);
+   PlayerShip* ship = new PlayerShip(makeVec(WINDOW_WIDTH/2,WINDOW_HEIGHT
+            /2,1), WINDOW_WIDTH, WINDOW_HEIGHT);
    world->addObject(ship);
    bool running = true;
 
@@ -53,9 +56,9 @@ int main()
    glMatrixMode(GL_PROJECTION);
    glPushMatrix();
    glLoadIdentity();
-   float proj[16] = {2/800, 0, 0, 0, 0, 2/800, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1};
-   glLoadMatrixf(proj);
-   //gluOrtho2D(0, 800, 0, 800);
+   //float proj[16] = {2/800, 0, 0, 0, 0, 2/800, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1};
+   //glLoadMatrixf(proj);
+   gluOrtho2D(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT);
    while(running) 
    {
       cur_time = glfwGetTime();
