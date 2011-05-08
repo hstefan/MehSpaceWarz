@@ -21,6 +21,8 @@
 
 #include <GL/glfw.h>
 #include "GameWorld.hpp"
+#include "PlayerShip.hpp"
+#include "../math/vector.hpp"
 #include <ctime>
 #include <cstdlib>
 
@@ -29,12 +31,15 @@ int main()
 {
    glfwInit();
    glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
-   glfwOpenWindow(800, 450, 8, 8, 8, 8, 24, 8, GLFW_WINDOW);
+   glfwOpenWindow(800, 800, 8, 8, 8, 8, 24, 8, GLFW_WINDOW);
 
    using hstefan::game::GameWorld;
+   using hstefan::game::PlayerShip;
+   using namespace hstefan::math;
 
    GameWorld* world = GameWorld::getInstance();
-
+   PlayerShip* ship = new PlayerShip(makeVec(0,0,0), 800, 800);
+   world->addObject(ship);
    bool running = true;
 
    double last_render = 0;
