@@ -33,8 +33,8 @@ namespace game
    public:
       static const unsigned int NUM_LIFES = 3;
       static const unsigned int HITPOINTS = 150;
-      static const unsigned int SHIP_WIDTH = 32;
-      static const unsigned int SHIP_HEIGHT = 32;
+      static const int SHIP_WIDTH = 32;
+      static const int SHIP_HEIGHT = 32;
 
       PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
       void update();

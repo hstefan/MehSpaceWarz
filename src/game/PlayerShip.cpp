@@ -51,7 +51,7 @@ void PlayerShip::update()
    }
    else if(glfwGetKey(GLFW_KEY_LEFT) == GLFW_PRESS)
    {
-      std::cout << "left pressed" << std::endl;
+     std::cout << "left pressed" << std::endl;
    }
    else if(glfwGetKey(GLFW_KEY_RIGHT) == GLFW_PRESS)
    {
@@ -75,6 +75,7 @@ void PlayerShip::render()
       glVertex2i(buff[2][0], buff[2][1]);
       glVertex2i(buff[3][0], buff[3][1]);
    glEnd();
+   std::cout << "desenhou";
 }
 
 } //namespace game
