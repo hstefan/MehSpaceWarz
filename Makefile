@@ -18,7 +18,7 @@ else
 endif
 EXTRA_CXXFLAGS += -pedantic -Wall -Wextra `pkg-config --cflags libglfw`
 
-ALL_CXXFLAGS += -std=c++0x -MMD -I./src -DTARGET_$(PLATFORM) $(EXTRA_CXXFLAGS) $(CXXFLAGS)
+ALL_CXXFLAGS += -MMD -I./src -DTARGET_$(PLATFORM) $(EXTRA_CXXFLAGS) $(CXXFLAGS)
 ALL_LDFLAGS += $(LDFLAGS)
 LDLIBS += -lm -lpng `pkg-config --libs libglfw`
 
