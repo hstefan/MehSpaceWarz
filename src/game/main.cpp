@@ -38,7 +38,7 @@ int main()
    using namespace hstefan::math;
 
    GameWorld* world = GameWorld::getInstance();
-   PlayerShip* ship = new PlayerShip(makeVec(0,0,0), 800, 800);
+   PlayerShip* ship = new PlayerShip(makeVec(400,400,1), 800, 800);
    world->addObject(ship);
    bool running = true;
 
