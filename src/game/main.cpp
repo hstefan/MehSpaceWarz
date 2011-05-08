@@ -53,16 +53,15 @@ int main()
    while(running) 
    {
       cur_time = glfwGetTime();
-      
-      glfwSwapBuffers();
-      
-      glClear(GL_COLOR_BUFFER_BIT);   
+       
       if(glfwGetKey(GLFW_KEY_ESC) == GLFW_PRESS) 
          break;
       if(cur_time - last_render > frame_interval) 
       {
          last_render = glfwGetTime();
+         //glClear(GL_COLOR_BUFFER_BIT);   
          world->render();
+         glfwSwapBuffers();
       }
       
       if(cur_time - last_update > update_interval)
