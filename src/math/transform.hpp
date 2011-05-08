@@ -20,8 +20,8 @@ namespace hstefan
 {
 namespace math
 {
-
-inline vec2 RotateClockwise(const vec2& vec, float angle)
+//deprecated
+inline vec2 rotateClockwise(const vec2& vec, float angle)
 {
    mat2d m = { 
       std::cos(angle) , std::sin(angle), 
@@ -31,7 +31,8 @@ inline vec2 RotateClockwise(const vec2& vec, float angle)
    return m*vec;
 }
 
-inline vec2 RotateAntiClockwise(const vec2& vec, float angle)
+//deprecated
+inline vec2 rotateAntiClockwise(const vec2& vec, float angle)
 {
    mat2d m = {
       std::cos(angle), -std::sin(angle), 
@@ -39,6 +40,39 @@ inline vec2 RotateAntiClockwise(const vec2& vec, float angle)
    };
 
    return m*vec;
+}
+
+inline mat3d rotMat2dh(float angle)
+{ 
+   mat3d m = {
+      std::cos(angle), -std::sin(angle), 0,
+      std::sin(angle), std::cos(angle) , 0,
+      0              , 0,                1
+   }
+
+   return m;
+}
+
+inline mat3d scaleMat2dh(float sx, float sy)
+{ 
+   mat3d m = {
+      sx, 0 , 0,
+      0 , sy, 0,
+      0 , 0 , 1
+   }
+
+   return m;
+}
+
+inline mat3d transMat2dh(int tx, int ty)
+{
+   mat3d m = {
+      1, 0, tx,
+      0, 1, ty,
+      0, 0, 1
+   }
+
+   return m;
 }
 
 } //namespace math
