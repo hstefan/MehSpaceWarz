@@ -22,12 +22,12 @@
 #define HSTEFAN_PLAYER_SHIP_HPP
 #include "Ship.hpp"
 #include "../math/vector.hpp"
+#include <queue>
 
 namespace hstefan
 {
 namespace game
-{
-   
+{ 
    class PlayerShip : public Ship
    {
    public:
@@ -38,10 +38,15 @@ namespace game
       static const int SHIP_WINDOW_HEIGHT = 800;
       static const int SHIP_WINDOW_WIDTH = 800;
 
-      PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
+      static const int LEFT_ROTATION_ID = 0;
+      static const int RIGHT_ROTATION_ID = 1;
+
+       PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
       void update();
       void render();
    private:
+      std::queue<char> rot_queue;
+      float rot_angle;
       math::vec3 vertex[4];
    };
 
