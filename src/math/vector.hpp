@@ -99,6 +99,23 @@ inline char quadrant(const vec2& vec)
    return quad;
 }
 
+inline vec2 makeVec(float x, float y)
+{
+   vec2 v = {{x, y}};
+   return v;
+}
+
+inline vec3 makeVec(float x, float y, float z)
+{
+   vec3 v = {{x, y, z}};
+   return v;
+}
+
+inline vec4 makeVec(float x, float y, float z, float h)
+{
+   vec4 v = {{x, y, z, h}};
+   return v;
+}
 } //namespace math
 } //namespace hstefan
 #ifdef _DEBUG
