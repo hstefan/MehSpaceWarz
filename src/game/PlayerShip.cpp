@@ -21,6 +21,8 @@
 
 #include "PlayerShip.hpp"
 #include <GL/glfw.h>
+#include "../math/transform.hpp"
+
 #include <iostream>
 
 namespace hstefan
@@ -31,8 +33,12 @@ using namespace math;
 
 PlayerShip::PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h)
    : Ship(NUM_LIFES, HITPOINTS, 0.f, makeVec(0.f, 1.f, 1.f), pos, screen_w, screen_h)
-{}
-
+{
+   vertex[0] = makeVec(-SHIP_WIDTH/2, SHIP_HEIGHT/2, 1);
+   vertex[1] = makeVec(-SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
+   vertex[2] = makeVec(SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
+   vertex[3] = makeVec(SHIP_WIDTH/2, SHIP_HEIGHT/2, 1);
+}
 void PlayerShip::update() 
 {
    if(glfwGetKey(GLFW_KEY_UP) == GLFW_PRESS) 
@@ -55,6 +61,21 @@ void PlayerShip::update()
 
 void PlayerShip::render()
 {
+   math::mat3d trans = math::transMat2dh(pos[0], pos[1]);
+   vec3 buff[4];
+   for(unsigned int i = 0; i < 4; ++i)
+   {
+      buff[i] = trans*vertex[i];
+      //std::cout << buff[i][0] << "," << buff[i][1] << std::endl;
+   }
+
+   glColor3f(1.f, 0.f, 0.f);
+   glBegin(GL_QUADS);
+      glVertex2i(buff[0][0], buff[0][1]);
+      glVertex2i(buff[1][0], buff[1][1]);
+      glVertex2i(buff[2][0], buff[2][1]);
+      glVertex2i(buff[3][0], buff[3][1]);
+   glEnd();
 }
 
 } //namespace game

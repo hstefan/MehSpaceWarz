@@ -21,6 +21,7 @@
 #ifndef HSTEFAN_PLAYER_SHIP_HPP
 #define HSTEFAN_PLAYER_SHIP_HPP
 #include "Ship.hpp"
+#include "../math/vector.hpp"
 
 namespace hstefan
 {
@@ -32,10 +33,14 @@ namespace game
    public:
       static const unsigned int NUM_LIFES = 3;
       static const unsigned int HITPOINTS = 150;
+      static const unsigned int SHIP_WIDTH = 32;
+      static const unsigned int SHIP_HEIGHT = 32;
 
       PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
       void update();
       void render();
+   private:
+      math::vec3 vertex[4];
    };
 
 } //namespace game
