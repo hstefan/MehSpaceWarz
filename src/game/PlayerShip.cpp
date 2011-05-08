@@ -33,20 +33,25 @@ using namespace math;
 
 PlayerShip::PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h)
    : Ship(NUM_LIFES, HITPOINTS, 0.f, makeVec(0.f, 1.f, 1.f), pos, screen_w, screen_h),
-   rot_queue(), rot_angle(0), max_speed(2.5f), handling(.05f)
+   rot_queue(), rot_angle(0), max_speed(5.f), handling(.05f)
 {
-   vertex[0] = makeVec(-SHIP_WIDTH/2, SHIP_HEIGHT/2, 1);
-   vertex[1] = makeVec(-SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
+   vertex[0] = makeVec(-SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
+   vertex[1] = makeVec(0.f, SHIP_HEIGHT/2, 1);
    vertex[2] = makeVec(SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
-   vertex[3] = makeVec(SHIP_WIDTH/2, SHIP_HEIGHT/2, 1);
 }
 void PlayerShip::update() 
 {
    if(glfwGetKey(GLFW_KEY_UP) == GLFW_PRESS) 
    {
-     speed += 0.1;
+     speed += 0.08f;
      if(speed > max_speed)
         speed = max_speed;
+   }
+   else
+   {
+      speed -= 0.02f;
+      if(speed < 0.f)
+         speed = 0.f;
    }
    //if(glfwGetKey(GLFW_KEY_DOWN) == GLFW_PRESS)
    //   std::cout << "down pressed" << std::endl;
@@ -72,7 +77,7 @@ void PlayerShip::render()
       rot_angle -= 360;
 
    math::mat3d rot = math::rotMat2dh(rot_angle);
-   dir = rot*math::makeVec(1, 0, 1);
+   dir = rot*math::makeVec(0, 1, 1);
    math::mat3d trans = math::transMat2dh(pos[0], pos[1]);
    math::mat3d scale = math::scaleMat2dh((float)screen_w/SHIP_WINDOW_WIDTH, 
          (float)screen_h/SHIP_WINDOW_HEIGHT);
@@ -83,11 +88,10 @@ void PlayerShip::render()
       buff[i] = res*vertex[i];
 
    glColor3f(1.f, 0.f, 0.f);
-   glBegin(GL_QUADS);
+   glBegin(GL_TRIANGLES);
       glVertex2i(buff[0][0], buff[0][1]);
       glVertex2i(buff[1][0], buff[1][1]);
       glVertex2i(buff[2][0], buff[2][1]);
-      glVertex2i(buff[3][0], buff[3][1]);
    glEnd();
 }
 

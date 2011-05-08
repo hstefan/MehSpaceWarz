@@ -49,7 +49,7 @@ namespace game
       float rot_angle;
       const float max_speed;
       const float handling;
-      math::vec3 vertex[4];
+      math::vec3 vertex[3];
    };
 
 } //namespace game
