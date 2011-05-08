@@ -69,7 +69,7 @@ public:
       }
    }
 
-   inline matrix operator-(const matrix& m)
+   inline matrix operator-(const matrix& m) const
    {
       matrix f;
 
@@ -81,7 +81,7 @@ public:
       return f;
    }
 
-   inline matrix operator+(const matrix& m)
+   inline matrix operator+(const matrix& m) const
    {
       matrix f;
 
@@ -93,7 +93,7 @@ public:
       return f;
    }
 
-   inline matrix operator/(float val)
+   inline matrix operator/(float val) const
    {
       matrix f;
 
@@ -105,7 +105,7 @@ public:
       return f;
    }
 
-   inline matrix operator*(float val)
+   inline matrix operator*(float val) const
    {
       matrix f;
 

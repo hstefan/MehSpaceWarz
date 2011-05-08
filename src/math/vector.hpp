@@ -79,7 +79,7 @@ matrix<N, 1>& normalize(matrix<N, 1>& vec)
 }
 
 template<unsigned int N>
-matrix<N, 1> unit(matrix<N, 1>& vec)
+matrix<N, 1> unit(const matrix<N, 1>& vec)
 {
    float s = 0;
    for(unsigned int i = 0; i < N; ++i)
