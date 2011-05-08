@@ -18,7 +18,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN      *
  * THE SOFTWARE.                                                                  *
  *********************************************************************************/
-
+#ifndef HSTEFAN_PLAYER_SHIP_HPP
+#define HSTEFAN_PLAYER_SHIP_HPP
 #include "Ship.hpp"
 
 namespace hstefan
@@ -32,8 +33,12 @@ namespace game
       static const unsigned int NUM_LIFES = 3;
       static const unsigned int HITPOINTS = 150;
 
-      PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);       
+      PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
+      void update();
+      void render();
    };
 
 } //namespace game
 } //namespace hstefan
+
+#endif
