@@ -33,7 +33,12 @@ void GameWorld::update()
 {
    deque_iter it_end = game_objs.end();
    for(deque_iter it = game_objs.begin(); it != it_end; ++it) 
-      (*it)->update();
+   {
+      if(!(*it)->done())
+         (*it)->update();
+      else
+         game_objs.erase(it);
+   }
 }
 
 void GameWorld::render()
