@@ -62,9 +62,12 @@ void PlayerShip::update()
 void PlayerShip::render()
 {
    math::mat3d trans = math::transMat2dh(pos[0], pos[1]);
+   math::mat3d scale = math::scaleMat2dh((float)screen_w/SHIP_WINDOW_WIDTH,
+         (float)screen_h/SHIP_WINDOW_HEIGHT);
    vec3 buff[4];
+   math::mat3d res = trans*scale;
    for(unsigned int i = 0; i < 4; ++i)
-      buff[i] = trans*vertex[i];
+      buff[i] = res*vertex[i];
 
    glColor3f(1.f, 0.f, 0.f);
    glBegin(GL_QUADS);

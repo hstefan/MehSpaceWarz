@@ -35,6 +35,8 @@ namespace game
       static const unsigned int HITPOINTS = 150;
       static const int SHIP_WIDTH = 32;
       static const int SHIP_HEIGHT = 32;
+      static const int SHIP_WINDOW_HEIGHT = 800;
+      static const int SHIP_WINDOW_WIDTH = 800;
 
       PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
       void update();
