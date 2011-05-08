@@ -59,8 +59,9 @@ void PlayerShip::update()
       rot_queue.push(LEFT_ROTATION_ID); 
    if(glfwGetKey(GLFW_KEY_RIGHT) == GLFW_PRESS)
       rot_queue.push(RIGHT_ROTATION_ID);
-   
+    
    pos += dir*speed;
+   checkPosition();
 }
 
 void PlayerShip::render()
@@ -87,12 +88,24 @@ void PlayerShip::render()
    for(unsigned int i = 0; i < 4; ++i)
       buff[i] = res*vertex[i];
 
-   glColor3f(1.f, 0.f, 0.f);
+   glColor3f(1.f, .3f, 0.f);
    glBegin(GL_TRIANGLES);
       glVertex2i(buff[0][0], buff[0][1]);
       glVertex2i(buff[1][0], buff[1][1]);
       glVertex2i(buff[2][0], buff[2][1]);
    glEnd();
+}
+
+void PlayerShip::checkPosition()
+{
+   if(pos[1] - SHIP_HEIGHT/2 > screen_h)
+      pos[1] = -SHIP_HEIGHT/2;
+   if(pos[1] + SHIP_HEIGHT/2 < 0)
+      pos[1] = screen_h + SHIP_HEIGHT/2;
+   if(pos[0] - SHIP_WIDTH/2 > screen_w)
+      pos[0] = -SHIP_WIDTH/2;
+   if(pos[0] + SHIP_WIDTH/2 < 0)
+      pos[0] = screen_w + SHIP_WIDTH/2;
 }
 
 } //namespace game

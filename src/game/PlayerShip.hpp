@@ -44,6 +44,8 @@ namespace game
        PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
       void update();
       void render();
+   protected:
+      void checkPosition();
    private:
       std::queue<char> rot_queue;
       float rot_angle;
