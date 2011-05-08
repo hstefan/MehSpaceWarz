@@ -27,7 +27,7 @@ namespace game
 {
 Ship::Ship(unsigned int lifes, unsigned int hp, float speed, const math::vec3& dir,
       const math::vec3& pos, unsigned int screen_w, unsigned int screen_h)
-   : lifes(lifes), hp(hp), dir(dir), speed(speed), pos(pos), screen_w(screen_h),
+   : lifes(lifes), hp(hp), speed(speed), dir(dir), pos(pos), screen_w(screen_w),
    screen_h(screen_h)
 {
 }
