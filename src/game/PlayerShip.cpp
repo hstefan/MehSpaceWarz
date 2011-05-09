@@ -144,7 +144,7 @@ void PlayerShip::render()
       float g = .3f;
       float b = 0.f;
 
-      math::mat3d tr = math::transMat2dh(-8*dir[0], -8*dir[1]);
+      math::mat3d tr = math::transMat2dh(-11*dir[0], -11*dir[1]);
       for(unsigned int i = 0; i < 3; ++i) 
       {
          glColor3f(r,g,b);
