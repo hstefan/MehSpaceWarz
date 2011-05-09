@@ -43,7 +43,7 @@ void Canon::update()
    for(std::deque<shot_t>::iterator it = shots.begin(); it != shots_end; ++it)
    {
       tmp = &(*it);
-      tmp->first += tmp->second;
+      tmp->first += tmp->second*9.0f;
       if(outOfScreen((*tmp).first))
          shots.erase(it);
    }
@@ -63,7 +63,7 @@ void Canon::render()
       for(std::deque<shot_t>::iterator it = shots.begin(); it != shots_end; ++it)
       {
          tmp = &(*it);
-         glVertex2i((*tmp).first[0] - 1, (*tmp).first[0] + 1);
+         glVertex2i((*tmp).first[0] - 1, (*tmp).first[1] + 1);
          glVertex2i((*tmp).first[0] - 1, (*tmp).first[1] - 1);
          glVertex2i((*tmp).first[0] + 1, (*tmp).first[1] - 1);
          glVertex2i((*tmp).first[0] + 1, (*tmp).first[1] + 1);
