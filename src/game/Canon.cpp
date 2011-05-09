@@ -44,6 +44,8 @@ void Canon::update()
    {
       tmp = &(*it);
       tmp->first += tmp->second;
+      if(outOfScreen((*tmp).first))
+         shots.erase(it);
    }
 }
 

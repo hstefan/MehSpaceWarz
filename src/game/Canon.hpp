@@ -41,11 +41,19 @@ namespace game
       bool done();
       
       typedef std::pair<math::vec3, math::vec3> shot_t;
+   protected:
+      inline bool outOfScreen(const math::vec3& pos);
    private:
       std::deque<shot_t > shots;
       unsigned int screen_width;
       unsigned int screen_height;
    };
+
+   bool Canon::outOfScreen(const math::vec3& pos)
+   {
+      return pos[0] > screen_width|| pos [0] < 0 || pos[1] > screen_height || pos[1] < 0;
+   }
+
 }//namespace game
 }//namespace hstefan
 
