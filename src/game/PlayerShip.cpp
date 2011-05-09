@@ -137,6 +137,29 @@ void PlayerShip::render()
       glVertex2i(buff[1][0], buff[1][1]);
       glVertex2i(buff[2][0], buff[2][1]);
    glEnd();
+
+   if(speed == max_speed)
+   {
+      float r = 1.f;
+      float g = .3f;
+      float b = 0.f;
+
+      math::mat3d tr = math::transMat2dh(-8*dir[0], -8*dir[1]);
+      for(unsigned int i = 0; i < 3; ++i) 
+      {
+         glColor3f(r,g,b);
+         glBegin(GL_TRIANGLES);
+            buff[0] = tr*buff[0];
+            buff[1] = tr*buff[1];
+            buff[2] = tr*buff[2];
+            glVertex2i(buff[0][0], buff[0][1]);
+            glVertex2i(buff[1][0], buff[1][1]);
+            glVertex2i(buff[2][0], buff[2][1]);
+         glEnd();
+         r -= 0.1;
+         g -= 0.09;
+      }
+   }
 }
 
 void PlayerShip::checkPosition()
