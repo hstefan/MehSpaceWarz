@@ -58,6 +58,7 @@ void Canon::render()
 {
    std::deque<shot_t>::iterator shots_end = shots.end();
    shot_t* tmp = 0;
+   glColor3f(1.f, 1.f, 1.f);
    glBegin(GL_QUADS);
       for(std::deque<shot_t>::iterator it = shots.begin(); it != shots_end; ++it)
       {

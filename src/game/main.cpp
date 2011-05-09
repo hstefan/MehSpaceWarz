@@ -22,10 +22,12 @@
 #include <GL/glfw.h>
 #include "GameWorld.hpp"
 #include "PlayerShip.hpp"
+#include "Canon.hpp"
 #include "../math/vector.hpp"
 #include <ctime>
 #include <cstdlib>
-//#include <GL/glu.h>
+#include <GL/glu.h>
+
 
 int main()
 {
@@ -37,12 +39,17 @@ int main()
 
    using hstefan::game::GameWorld;
    using hstefan::game::PlayerShip;
+   using hstefan::game::Canon;
    using namespace hstefan::math;
 
    GameWorld* world = GameWorld::getInstance();
    PlayerShip* ship = new PlayerShip(makeVec(WINDOW_WIDTH/2,WINDOW_HEIGHT
             /2,1), WINDOW_WIDTH, WINDOW_HEIGHT);
+   Canon* can = new Canon(WINDOW_WIDTH, WINDOW_HEIGHT);
+   ship->addCanon(can);
    world->addObject(ship);
+   world->addObject(can);
+
    bool running = true;
 
    double last_render = 0;

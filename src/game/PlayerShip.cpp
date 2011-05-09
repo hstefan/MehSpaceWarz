@@ -34,7 +34,8 @@ using namespace math;
 PlayerShip::PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h)
    : Ship(NUM_LIFES, HITPOINTS, 0.f, makeVec(0.f, 1.f, 1.f), pos, screen_w, screen_h),
    rot_queue(), transmission(), ratio(0), cur_ratio(0), rot_angle(0), max_speed(8.f), 
-   handling(.05f), increase_ratio(false), decrease_ratio(false)
+   handling(.05f), increase_ratio(false), decrease_ratio(false), canons(), shooting_latency(1/3),
+   last_shoot(0)
 {
    vertex[0] = makeVec(-SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
    vertex[1] = makeVec(0.f, SHIP_HEIGHT/2, 1);
@@ -52,6 +53,7 @@ PlayerShip::PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned in
 
    cur_ratio = & transmission[ratio];
 }
+
 void PlayerShip::update() 
 {
    if(glfwGetKey(GLFW_KEY_UP) == GLFW_PRESS) 
@@ -66,8 +68,7 @@ void PlayerShip::update()
       if(speed < 0.f)
          speed = 0.f;
    }
-   //if(glfwGetKey(GLFW_KEY_DOWN) == GLFW_PRESS)
-   //   std::cout << "down pressed" << std::endl;
+
    if(glfwGetKey(GLFW_KEY_LEFT) == GLFW_PRESS)
       rot_queue.push(LEFT_ROTATION_ID); 
    if(glfwGetKey(GLFW_KEY_RIGHT) == GLFW_PRESS)
@@ -95,6 +96,13 @@ void PlayerShip::update()
    if(!decrease_ratio && glfwGetKey('D') == GLFW_PRESS)
       decrease_ratio = true;
 
+   if(glfwGetKey(GLFW_KEY_SPACE) == GLFW_PRESS /*&& canShoot()*/)
+   {
+      std::deque<Canon*>::iterator can_end = canons.end();
+      for(std::deque<Canon*>::iterator it = canons.begin(); it != can_end; ++it)
+         (*it)->shot(pos, dir);
+      //std::cout << "shooot" << std::endl;
+   }
    pos += dir*speed;
    checkPosition();
 }
@@ -141,6 +149,17 @@ void PlayerShip::checkPosition()
       pos[0] = -SHIP_WIDTH/2;
    if(pos[0] + SHIP_WIDTH/2 < 0)
       pos[0] = screen_w + SHIP_WIDTH/2;
+}
+
+bool PlayerShip::canShoot()
+{
+   double now = glfwGetTime();
+   if(now - last_shoot > shooting_latency)
+   {
+      last_shoot = now;
+      return true;
+   }
+   return false;
 }
 
 } //namespace game

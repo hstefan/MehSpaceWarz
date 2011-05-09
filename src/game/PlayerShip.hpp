@@ -24,6 +24,7 @@
 #include "../math/vector.hpp"
 #include <queue>
 #include <map>
+#include "Canon.hpp"
 
 namespace hstefan
 {
@@ -42,7 +43,7 @@ namespace game
       static const int LEFT_ROTATION_ID = 0;
       static const int RIGHT_ROTATION_ID = 1;
 
-       PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
+      PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
       void update();
       void render();
 
@@ -53,8 +54,10 @@ namespace game
          float breaking;
       };
 
+      inline void addCanon(Canon* can);
    protected:
       void checkPosition();
+      bool canShoot();
    private:
       std::queue<char> rot_queue;
       std::map<unsigned int, ratio_info> transmission;
@@ -66,8 +69,15 @@ namespace game
       math::vec3 vertex[3];
       bool increase_ratio;
       bool decrease_ratio;
+      std::deque<Canon*> canons;
+      double shooting_latency;
+      double last_shoot;
    };
 
+   inline void PlayerShip::addCanon(Canon* can)
+   {
+      canons.push_back(can);
+   }
 } //namespace game
 } //namespace hstefan
 
