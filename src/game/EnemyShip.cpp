@@ -21,7 +21,7 @@
 
 #include "EnemyShip.hpp"
 #include "../math/transform.hpp"
-
+#include <iostream>
 namespace hstefan
 {
 namespace game
@@ -38,7 +38,15 @@ namespace game
 
    void EnemyShip::update()
    { 
-      dir = unit(tracking->getPos() - pos);
+      math::vec3 tpos_buf = tracking->getPos();
+      math::vec2 tpos_2 = math::makeVec(tpos_buf[0], tpos_buf[1]);
+      math::vec2 mpos_2 = math::makeVec(pos[0], pos[1]);
+      math::vec2 dir_buff = math::unit(tpos_2 - mpos_2);
+      dir[0] = dir_buff[0];
+      dir[1] = dir_buff[1];
+      dir[2] = 1;
+
+      //std::cout << dir[0] << "," << dir[1] << "," << dir[2] << std::endl;
       /*float res = math::dot(ndir, dir);
       if((int)res != 0)
       {
