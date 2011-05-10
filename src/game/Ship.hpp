@@ -43,6 +43,11 @@ namespace game
       {
          return pos;
       }
+
+      inline float getSpeed()
+      {
+         return speed;
+      }
    protected:
       unsigned int lifes;
       unsigned int hp;
