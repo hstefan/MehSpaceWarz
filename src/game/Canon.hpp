@@ -26,6 +26,8 @@
 #include "../math/vector.hpp"
 #include <deque>
 #include <utility>
+#include <GL/glfw.h>
+
 
 namespace hstefan
 {
@@ -43,10 +45,12 @@ namespace game
       typedef std::pair<math::vec3, math::vec3> shot_t; //vectores de posição e direção
    protected:
       inline bool outOfScreen(const math::vec3& pos); //verifica se o tiro esta fora da tela (encerrou seu ciclo de vida)
+      void loadTextures();
    private:
       std::deque<shot_t > shots;
       unsigned int screen_width;
       unsigned int screen_height;
+      GLuint texture;
    };
 
    bool Canon::outOfScreen(const math::vec3& pos)

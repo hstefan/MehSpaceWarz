@@ -178,7 +178,7 @@ void PlayerShip::render()
 
    if(speed == max_speed)
    {
-      float alpha = 0.1f;
+      float alpha = 0.15f;
       math::mat3d tr = math::transMat2dh(-10*dir[0], -10*dir[1]);
       for(unsigned int i = 0; i < 3; ++i) //desenha um efeitinho caso a nave esteja na velocidade máxima
       {                                   //são basicamente repetições da nave que ficam para trás e são "mais transparentes"

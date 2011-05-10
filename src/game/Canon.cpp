@@ -20,7 +20,7 @@
  *********************************************************************************/
 
 #include "Canon.hpp"
-#include <GL/glfw.h>
+#include <iostream>
 
 namespace hstefan
 {
@@ -31,6 +31,7 @@ Canon::Canon(unsigned int sw, unsigned int sh)
    : shots(), screen_width(sw), screen_height(sh)
 {
    //shots.resize(100);
+   loadTextures();
 }
 
 void Canon::shot(const math::vec3& orig, const math::vec3& dir)
@@ -47,7 +48,10 @@ void Canon::update()
       tmp = &(*it);
       tmp->first += tmp->second*9.0f;
       if(outOfScreen((*tmp).first))
+      {
          shots.erase(it);
+         break;
+      }
    }
 }
 
@@ -60,17 +64,47 @@ void Canon::render()
 {
    std::deque<shot_t>::iterator shots_end = shots.end();
    const shot_t* tmp = 0;
-   glColor3f(1.f, .8f, .3f);
+   //glColor3f(1.f, .8f, .3f);
+   
+   glColor4f(1.f, 1.f, 1.f, 1.f);
+   glEnable(GL_BLEND);
+   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+   glEnable(GL_TEXTURE_2D);
+
+   glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+   glBindTexture(GL_TEXTURE_2D, texture);
+   
    glBegin(GL_QUADS);
       for(std::deque<shot_t>::const_iterator it = shots.begin(); it != shots_end; ++it)
       {
          tmp = &(*it);
-         glVertex2f((*tmp).first[0] - 1, (*tmp).first[1] + 1);
-         glVertex2f((*tmp).first[0] - 1, (*tmp).first[1] - 1);
-         glVertex2f((*tmp).first[0] + 1, (*tmp).first[1] - 1);
-         glVertex2f((*tmp).first[0] + 1, (*tmp).first[1] + 1);
+         glTexCoord2f(0.f, 1.f);
+         glVertex2f((*tmp).first[0] - 4, (*tmp).first[1] + 4);
+         glTexCoord2f(0.f, 0.f);
+         glVertex2f((*tmp).first[0] - 4, (*tmp).first[1] - 3);
+         glTexCoord2f(1.f, 0.f);
+         glVertex2f((*tmp).first[0] + 3, (*tmp).first[1] - 3);
+         glTexCoord2f(1.f, 1.f);
+         glVertex2f((*tmp).first[0] + 3, (*tmp).first[1] + 4);
       }
    glEnd();
+   glDisable(GL_TEXTURE_2D);
+   glDisable(GL_BLEND);
+
+}
+
+void Canon::loadTextures()
+{
+   glGenTextures(1, &texture);    
+   glBindTexture(GL_TEXTURE_2D, texture); 
+   GLuint flags = GLFW_BUILD_MIPMAPS_BIT | GLFW_ALPHA_MAP_BIT;
+   if(glfwLoadTexture2D("mehsw-shot.tga", flags) == GL_FALSE) 
+      std::cout << "falha ao carregar textura do tiro" << std::endl;
+   
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);    
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); 
+   glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT ); 
+   glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 }
 
 } //namespace game

@@ -47,9 +47,8 @@ int main()
             /2,1), WINDOW_WIDTH, WINDOW_HEIGHT);
    Canon* can = new Canon(WINDOW_WIDTH, WINDOW_HEIGHT);
    ship->addCanon(can);
-   world->addObject(ship);
    world->addObject(can);
-
+   world->addObject(ship);
    bool running = true;
 
    double last_render = 0;
