@@ -20,7 +20,6 @@
  *********************************************************************************/
 
 #include "PlayerShip.hpp"
-#include <GL/glfw.h>
 #include "../math/transform.hpp"
 
 #include <iostream>
@@ -35,11 +34,12 @@ PlayerShip::PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned in
    : Ship(NUM_LIFES, HITPOINTS, 0.f, makeVec(0.f, 1.f, 1.f), pos, screen_w, screen_h),
    rot_queue(), transmission(), ratio(0), cur_ratio(0), rot_angle(0), max_speed(8.f), 
    handling(.05f), increase_ratio(false), decrease_ratio(false), canons(), shooting_latency(1/3),
-   last_shoot(0)
+   last_shoot(0), cur_tex(0)
 {
-   vertex[0] = makeVec(-SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
-   vertex[1] = makeVec(0.f, SHIP_HEIGHT/2, 1);
+   vertex[0] = makeVec(-SHIP_WIDTH/2, SHIP_HEIGHT/2, 1);
+   vertex[1] = makeVec(-SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
    vertex[2] = makeVec(SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
+   vertex[3] = makeVec(SHIP_WIDTH/2, SHIP_HEIGHT/2, 1);
 
    ratio_info r1 = {2.5f, 0.1f, 0.035f};
    ratio_info r2 = {4.2f, 0.07f, 0.030f};
@@ -52,6 +52,7 @@ PlayerShip::PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned in
    transmission[3] = r4;
 
    cur_ratio = & transmission[ratio];
+   loadTextures();
 }
 
 void PlayerShip::update() 
@@ -101,7 +102,6 @@ void PlayerShip::update()
       std::deque<Canon*>::iterator can_end = canons.end();
       for(std::deque<Canon*>::iterator it = canons.begin(); it != can_end; ++it)
          (*it)->shot(pos, dir);
-      //std::cout << "shooot" << std::endl;
    }
    pos += dir*speed;
    checkPosition();
@@ -127,39 +127,50 @@ void PlayerShip::render()
          (float)screen_h/SHIP_WINDOW_HEIGHT);
 
    math::mat3d res = trans*rot*scale;
-   math::vec3 buff[3];
-   for(unsigned int i = 0; i < 3; ++i)
+   math::vec3 buff[4];
+   for(unsigned int i = 0; i < 4; ++i)
       buff[i] = res*vertex[i];
 
-   glColor3f(1.f, .3f, 0.f);
-   glBegin(GL_TRIANGLES);
+   glColor4f(1.f, 1.f, 1.f, 1.f);
+   glEnable(GL_BLEND);
+   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+   glEnable(GL_TEXTURE_2D);
+
+   glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+   glBindTexture(GL_TEXTURE_2D, textures);
+   glBegin(GL_QUADS);
+      glTexCoord2f(0.f, 1.f);
       glVertex2i(buff[0][0], buff[0][1]);
+      glTexCoord2f(0.f, 0.f);
       glVertex2i(buff[1][0], buff[1][1]);
+      glTexCoord2f(1.f, 0.f);
       glVertex2i(buff[2][0], buff[2][1]);
+      glTexCoord2f(1.f, 1.f);
+      glVertex2i(buff[3][0], buff[3][1]);
    glEnd();
 
    if(speed == max_speed)
    {
-      float r = 1.f;
-      float g = .3f;
-      float b = 0.f;
-
-      math::mat3d tr = math::transMat2dh(-11*dir[0], -11*dir[1]);
+      float alpha = 0.7;
+      math::mat3d tr = math::transMat2dh(-17*dir[0], -17*dir[1]);
       for(unsigned int i = 0; i < 3; ++i) 
       {
-         glColor3f(r,g,b);
-         glBegin(GL_TRIANGLES);
+         glColor4f(1.f,1.f,1.f, alpha);
+         glBegin(GL_QUADS);
             buff[0] = tr*buff[0];
             buff[1] = tr*buff[1];
             buff[2] = tr*buff[2];
+            buff[3] = tr*buff[3];
             glVertex2i(buff[0][0], buff[0][1]);
             glVertex2i(buff[1][0], buff[1][1]);
             glVertex2i(buff[2][0], buff[2][1]);
+            glVertex2i(buff[3][0], buff[3][1]);
          glEnd();
-         r -= 0.1;
-         g -= 0.09;
+         alpha -= 0.33;
       }
    }
+   //glDisable(GL_TEXTURE_2D);
+   //glDisable(GL_BLEND);
 }
 
 void PlayerShip::checkPosition()
@@ -183,6 +194,37 @@ bool PlayerShip::canShoot()
       return true;
    }
    return false;
+}
+
+void PlayerShip::loadTextures()
+{
+   glGenTextures(1, &textures);
+   std::cout << textures << std::endl;
+   glBindTexture(GL_TEXTURE_2D, textures);
+   GLuint flags = GLFW_BUILD_MIPMAPS_BIT | GLFW_ALPHA_MAP_BIT;
+   if(glfwLoadTexture2D("mehsw-player-stay.tga", flags) == GL_FALSE)
+      std::cout << "falha ao carregar textura da nave parada" << std::endl;
+   
+   glBindTexture(GL_TEXTURE_2D, textures);   
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); 
+   glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+   glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT ); 
+   /*
+   if(glfwLoadTexture2D("mehsw-player-acc1.tga", flags) == GL_FALSE)
+      std::cout << "falha ao carregar a nave acelerando 1" << std::endl;
+   glBindTexture(GL_TEXTURE_2D, textures[2]);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+   glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );  
+   
+   if(glfwLoadTexture2D("mehsw-player-acc2.tga", flags) == GL_FALSE)
+      std::cout << "falha ao carregar a nave acelerando 2" << std::endl;
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+   glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );*/
 }
 
 } //namespace game

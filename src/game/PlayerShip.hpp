@@ -25,6 +25,7 @@
 #include <queue>
 #include <map>
 #include "Canon.hpp"
+#include <GL/glfw.h>
 
 namespace hstefan
 {
@@ -58,6 +59,7 @@ namespace game
    protected:
       void checkPosition();
       bool canShoot();
+      void loadTextures();
    private:
       std::queue<char> rot_queue;
       std::map<unsigned int, ratio_info> transmission;
@@ -66,12 +68,14 @@ namespace game
       float rot_angle;
       const float max_speed;
       const float handling;
-      math::vec3 vertex[3];
+      math::vec3 vertex[4];
       bool increase_ratio;
       bool decrease_ratio;
       std::deque<Canon*> canons;
       double shooting_latency;
       double last_shoot;
+      GLuint textures;
+      unsigned int cur_tex;
    };
 
    inline void PlayerShip::addCanon(Canon* can)

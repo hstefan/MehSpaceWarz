@@ -31,8 +31,8 @@
 
 int main()
 {
-   static const int WINDOW_HEIGHT = 600;
-   static const int WINDOW_WIDTH = 600;
+   static const int WINDOW_HEIGHT = 800;
+   static const int WINDOW_WIDTH = 800;
    glfwInit();
    glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
    glfwOpenWindow(WINDOW_HEIGHT, WINDOW_WIDTH, 8, 8, 8, 8, 24, 8, GLFW_WINDOW);
