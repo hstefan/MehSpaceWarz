@@ -74,7 +74,7 @@ namespace game
       std::deque<Canon*> canons;
       double shooting_latency;
       double last_shoot;
-      GLuint textures;
+      GLuint textures[3];
       unsigned int cur_tex;
    };
 
