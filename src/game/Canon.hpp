@@ -35,14 +35,14 @@ namespace game
    {
    public:
       Canon(unsigned int sw, unsigned int sh);
-      void shot(const math::vec3& orig, const math::vec3& dir);
+      void shot(const math::vec3& orig, const math::vec3& dir); //atira, argumentos de posição inicial e direção do tiro
       void update();
       void render();
       bool done();
       
-      typedef std::pair<math::vec3, math::vec3> shot_t;
+      typedef std::pair<math::vec3, math::vec3> shot_t; //vectores de posição e direção
    protected:
-      inline bool outOfScreen(const math::vec3& pos);
+      inline bool outOfScreen(const math::vec3& pos); //verifica se o tiro esta fora da tela (encerrou seu ciclo de vida)
    private:
       std::deque<shot_t > shots;
       unsigned int screen_width;

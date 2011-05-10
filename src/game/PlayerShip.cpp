@@ -33,7 +33,7 @@ using namespace math;
 PlayerShip::PlayerShip(const math::vec3& pos, unsigned int screen_w, unsigned int screen_h)
    : Ship(NUM_LIFES, HITPOINTS, 0.f, makeVec(0.f, 1.f, 1.f), pos, screen_w, screen_h),
    rot_queue(), transmission(), ratio(0), cur_ratio(0), rot_angle(0), max_speed(8.f), 
-   handling(.05f), increase_ratio(false), decrease_ratio(false), canons(), shooting_latency(1/3),
+   handling(.05f), increase_ratio(false), decrease_ratio(false), canons(), shooting_latency(1.f/10.f),
    last_shoot(0), cur_tex(0)
 {
    /*
@@ -118,7 +118,7 @@ void PlayerShip::update()
    if(!decrease_ratio && glfwGetKey('D') == GLFW_PRESS)
       decrease_ratio = true;
 
-   if(glfwGetKey(GLFW_KEY_SPACE) == GLFW_PRESS /*&& canShoot()*/)
+   if(glfwGetKey(GLFW_KEY_SPACE) == GLFW_PRESS && canShoot())
    {
       std::deque<Canon*>::iterator can_end = canons.end();
       //faz com que todos canhões atirem

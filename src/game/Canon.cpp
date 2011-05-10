@@ -29,7 +29,9 @@ namespace game
 
 Canon::Canon(unsigned int sw, unsigned int sh)
    : shots(), screen_width(sw), screen_height(sh)
-{}
+{
+   //shots.resize(100);
+}
 
 void Canon::shot(const math::vec3& orig, const math::vec3& dir)
 {
@@ -51,16 +53,16 @@ void Canon::update()
 
 bool Canon::done()
 {
-   return false;
+   return false; //o canhão nunca termina
 }
 
 void Canon::render()
 {
    std::deque<shot_t>::iterator shots_end = shots.end();
-   shot_t* tmp = 0;
-   glColor3f(1.f, 1.f, 1.f);
+   const shot_t* tmp = 0;
+   glColor3f(1.f, .8f, .3f);
    glBegin(GL_QUADS);
-      for(std::deque<shot_t>::iterator it = shots.begin(); it != shots_end; ++it)
+      for(std::deque<shot_t>::const_iterator it = shots.begin(); it != shots_end; ++it)
       {
          tmp = &(*it);
          glVertex2i((*tmp).first[0] - 1, (*tmp).first[1] + 1);

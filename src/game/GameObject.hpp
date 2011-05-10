@@ -30,9 +30,9 @@ namespace game
 class GameObject
 {
 public:
-   virtual void update() = 0;
-   virtual void render() = 0;
-   virtual bool done() = 0;
+   virtual void update() = 0; //atualiza o objeto
+   virtual void render() = 0; //renderiza o objeto
+   virtual bool done() = 0; //diz se o objeto encerrou seu ciclo de vida
 };
 
 } //namespace game

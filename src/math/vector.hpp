@@ -65,7 +65,7 @@ float norm(const matrix<N, 1>& vec)
    for(unsigned int i = 0; i < N; ++i)
       acc += vec[i] * vec[i];
 
-   return std::sqrt(acc);
+   return 1/invSqrt(acc);
 }
 
 template<unsigned int N>
