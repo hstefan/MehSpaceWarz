@@ -167,18 +167,18 @@ void PlayerShip::render()
    glBindTexture(GL_TEXTURE_2D, textures[cur_tex]); //cur_tex é a textura atual (utilizado para fins de animação)
    glBegin(GL_QUADS); //desenha a nave
       glTexCoord2f(0.f, 1.f);
-      glVertex2i(buff[0][0], buff[0][1]);
+      glVertex2f(buff[0][0], buff[0][1]);
       glTexCoord2f(0.f, 0.f);
-      glVertex2i(buff[1][0], buff[1][1]);
+      glVertex2f(buff[1][0], buff[1][1]);
       glTexCoord2f(1.f, 0.f);
-      glVertex2i(buff[2][0], buff[2][1]);
+      glVertex2f(buff[2][0], buff[2][1]);
       glTexCoord2f(1.f, 1.f);
-      glVertex2i(buff[3][0], buff[3][1]);
+      glVertex2f(buff[3][0], buff[3][1]);
    glEnd();
 
    if(speed == max_speed)
    {
-      float alpha = 0.1;
+      float alpha = 0.1f;
       math::mat3d tr = math::transMat2dh(-10*dir[0], -10*dir[1]);
       for(unsigned int i = 0; i < 3; ++i) //desenha um efeitinho caso a nave esteja na velocidade máxima
       {                                   //são basicamente repetições da nave que ficam para trás e são "mais transparentes"
@@ -190,15 +190,15 @@ void PlayerShip::render()
             buff[3] = tr*buff[3];
             
             glTexCoord2f(0.f, 1.f);
-            glVertex2i(buff[0][0], buff[0][1]); 
+            glVertex2f(buff[0][0], buff[0][1]); 
             glTexCoord2f(0.f, 0.f);
-            glVertex2i(buff[1][0], buff[1][1]);
+            glVertex2f(buff[1][0], buff[1][1]);
             glTexCoord2f(1.f, 0.f);
-            glVertex2i(buff[2][0], buff[2][1]);  
+            glVertex2f(buff[2][0], buff[2][1]);  
             glTexCoord2f(1.f, 1.f);
-            glVertex2i(buff[3][0], buff[3][1]);
+            glVertex2f(buff[3][0], buff[3][1]);
          glEnd();
-         alpha -= 0.03;
+         alpha -= 0.03f;
       }
    }
    glDisable(GL_TEXTURE_2D);
@@ -208,13 +208,13 @@ void PlayerShip::render()
 void PlayerShip::checkPosition()
 {
    if(pos[1] - SHIP_HEIGHT/2 > screen_h)
-      pos[1] = -SHIP_HEIGHT/2;
+      pos[1] = (float)-SHIP_HEIGHT/2;
    if(pos[1] + SHIP_HEIGHT/2 < 0)
-      pos[1] = screen_h + SHIP_HEIGHT/2;
+      pos[1] = (float)screen_h + SHIP_HEIGHT/2;
    if(pos[0] - SHIP_WIDTH/2 > screen_w)
-      pos[0] = -SHIP_WIDTH/2;
+      pos[0] = (float)-SHIP_WIDTH/2;
    if(pos[0] + SHIP_WIDTH/2 < 0)
-      pos[0] = screen_w + SHIP_WIDTH/2;
+      pos[0] = (float)screen_w + SHIP_WIDTH/2;
 }
 
 bool PlayerShip::canShoot()
