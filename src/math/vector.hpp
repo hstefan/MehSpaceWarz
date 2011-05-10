@@ -116,6 +116,15 @@ inline vec4 makeVec(float x, float y, float z, float h)
    vec4 v = {{x, y, z, h}};
    return v;
 }
+
+inline float angle2dh(const vec2 v, const vec2 u)
+{
+   float dt = dot(v, u);
+   float n = norm(v) * norm(u);
+   
+   return acos(dt/n);
+}
+
 } //namespace math
 } //namespace hstefan
 #ifdef _DEBUG

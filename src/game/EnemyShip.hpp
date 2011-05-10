@@ -22,6 +22,7 @@
 #define HSTEFAN_ENEMY_SHIP_HPP
 
 #include "Ship.hpp"
+#include <GL/glfw.h>
 
 namespace hstefan
 {
@@ -33,8 +34,16 @@ namespace game
       EnemyShip(Ship* tracking, const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
       void update();
       void render();
+
+      static const int SHIP_WIDTH = 32;
+      static const int SHIP_HEIGHT = 32;
+      static const int SHIP_WINDOW_HEIGHT = 800;
+      static const int SHIP_WINDOW_WIDTH = 800;
    private:
+      float rot_angle;
       Ship* tracking;
+      math::vec3 vertex[4];
+      GLuint texture;
    };
 } //namespace game
 } //namespace hstefan
