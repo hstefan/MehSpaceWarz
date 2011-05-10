@@ -18,44 +18,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN      *
  * THE SOFTWARE.                                                                  *
  *********************************************************************************/
-#ifndef HSTEFAN_SHIP_HPP
-#define HSTEFAN_SHIP_HPP
 
-#include "GameObject.hpp"
-#include "../math/vector.hpp"
+#include "EnemyShip.hpp"
 
 namespace hstefan
 {
 namespace game
 {
+   EnemyShip::EnemyShip(Ship* tracking, const math::vec3& pos, unsigned int screen_w, unsigned int screen_h)
+      : Ship(0, 100, 4.f, math::makeVec(0,1,1), pos, screen_w, screen_h),
+      tracking(tracking)
+   {}
 
-   class Ship : public GameObject
+   void EnemyShip::update()
    {
-   public:
-      Ship(unsigned int lifes, unsigned int hp, float speed, const math::vec3& dir,
-            const math::vec3& pos, unsigned int screen_w, unsigned int screen_h);
+      math::vec3 ndir = tracking->getPos() - pos;
+      dir = math::unit(ndir);
+   }
 
-      virtual void update() = 0;
-      virtual void render() = 0;
-      bool done();
-      
-      inline math::vec3 getPos()
-      {
-         return pos;
-      }
-   protected:
-      unsigned int lifes;
-      unsigned int hp;
-      float speed;
-      
-      math::vec3 dir;
-      math::vec3 pos;
+   void EnemyShip::render()
+   {
+   }
 
-      const unsigned int screen_w;
-      const unsigned int screen_h;
-   };
-
-} //namespace game
+} //
 } //namespace hstefan
-
-#endif
