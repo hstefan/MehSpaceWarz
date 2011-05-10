@@ -37,8 +37,8 @@ namespace game
    }
 
    void EnemyShip::update()
-   {
-      dir = tracking->getPos() - pos;
+   { 
+      dir = unit(tracking->getPos() - pos);
       /*float res = math::dot(ndir, dir);
       if((int)res != 0)
       {
@@ -60,20 +60,20 @@ namespace game
          buff[i] = res*vertex[i]; 
 
       glColor4f(1.f, 1.f, 1.f, 1.f);
-      glEnable(GL_BLEND);
-      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+      //glEnable(GL_BLEND);
+      //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
       //glEnable(GL_TEXTURE_2D);
 
       //glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
       //glBindTexture(GL_TEXTURE_2D, texture); 
       glBegin(GL_QUADS);
-         glTexCoord2f(0.f, 1.f);
+         //glTexCoord2f(0.f, 1.f);
          glVertex2f(buff[0][0], buff[0][1]);
-         glTexCoord2f(0.f, 0.f);
+         //glTexCoord2f(0.f, 0.f);
          glVertex2f(buff[1][0], buff[1][1]);
-         glTexCoord2f(1.f, 0.f);
+         //glTexCoord2f(1.f, 0.f);
          glVertex2f(buff[2][0], buff[2][1]);
-         glTexCoord2f(1.f, 1.f);
+         //glTexCoord2f(1.f, 1.f);
          glVertex2f(buff[3][0], buff[3][1]);
       glEnd();
    }
