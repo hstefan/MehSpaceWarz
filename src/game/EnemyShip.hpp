@@ -43,6 +43,7 @@ namespace game
       float rot_angle;
       float max_speed;
       float acc;
+      float angle_left;
       Ship* tracking;
       math::vec3 vertex[4];
       GLuint texture;

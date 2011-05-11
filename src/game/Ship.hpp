@@ -43,7 +43,10 @@ namespace game
       {
          return pos;
       }
-
+      inline math::vec3 getDir()
+      {
+         return dir;
+      }
       inline float getSpeed()
       {
          return speed;

@@ -28,7 +28,7 @@ namespace game
 {
    EnemyShip::EnemyShip(Ship* tracking, const math::vec3& pos, unsigned int screen_w, unsigned int screen_h)
       : Ship(0, 100, 0.f, math::makeVec(0,1,1), pos, screen_w, screen_h),
-      rot_angle(0.f), max_speed(6.f), acc(0.01f), tracking(tracking)
+      rot_angle(0.f), max_speed(6.f), acc(0.01f), angle_left(0.f), tracking(tracking)
    {
       vertex[0] = math::makeVec(-SHIP_WIDTH/2, SHIP_HEIGHT/2, 1);
       vertex[1] = math::makeVec(-SHIP_WIDTH/2, -SHIP_HEIGHT/2, 1);
@@ -41,11 +41,15 @@ namespace game
    { 
       math::vec3 tpos_buf = tracking->getPos();
       math::vec2 tpos_2 = math::makeVec(tpos_buf[0], tpos_buf[1]);
-      math::vec2 mpos_2 = math::makeVec(pos[0], pos[1]);
-      math::vec2 dir_buff = math::unit(tpos_2 - mpos_2);
-      dir[0] = dir_buff[0];
-      dir[1] = dir_buff[1];
-      dir[2] = 1;
+      math::vec2 mpos_2 = math::makeVec(pos[0], pos[1]); 
+      angle_left = 360.f*math::angle2dh(tpos_2, mpos_2);
+      math::mat3d rot = math::rotMat2dh(angle_left);
+      math::vec3 ve = rot*pos;
+      float ren = dot(math::makeVec(ve[0], ve[1]), mpos_2);
+      if(std::abs(ren) <= 0.012)
+      {
+         angle_left = angle_left - 360;
+      }
       if(speed < max_speed && math::norm(tpos_2 - mpos_2) >  50.f)
       {
          if(speed < 0)
@@ -59,8 +63,8 @@ namespace game
 
    void EnemyShip::render()
    {
-      math::mat3d rot = math::rotMat2dh(rot_angle);
-      dir = rot*math::makeVec(0, 1, 1);       
+      math::mat3d rot = math::rotMat2dh(0);
+      dir = tracking->getDir();       
       math::mat3d trans = math::transMat2dh(pos[0], pos[1]); 
       math::mat3d scale = math::scaleMat2dh((float)screen_w/SHIP_WINDOW_WIDTH, 
             (float)screen_h/SHIP_WINDOW_HEIGHT);
