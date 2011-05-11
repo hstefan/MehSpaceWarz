@@ -19,6 +19,11 @@
  * THE SOFTWARE.                                                                  *
  *********************************************************************************/
 
+/*
+ * Nome: Hugo Stefan Kaus Puhlmann
+ * Matricula: 2910182
+ */
+
 #include "Canon.hpp"
 #include <iostream>
 

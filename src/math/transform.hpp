@@ -8,7 +8,10 @@
  *   copies of the Software, and to permit persons to whom the Software is
  *   furnished to do so, subject to the following conditions:
  */
-
+/*
+ * Nome: Hugo Stefan Kaus Puhlmann
+ * Matricula: 2910182
+ */
 #ifndef HSTEFAN_TRANSFORM_HPP
 #define HSTEFAN_TRANSFORM_HPP
 

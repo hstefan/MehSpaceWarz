@@ -18,7 +18,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN      *
  * THE SOFTWARE.                                                                  *
  *********************************************************************************/
-
+/*
+ * Nome: Hugo Stefan Kaus Puhlmann
+ * Matricula: 2910182
+ */
 #ifndef HSTEFAN_GAMEOBJECT_HPP
 #define HSTEFAN_GAMEOBJECT_HPP
 

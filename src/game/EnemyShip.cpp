@@ -18,7 +18,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN      *
  * THE SOFTWARE.                                                                  *
  *********************************************************************************/
-
+/*
+ * Nome: Hugo Stefan Kaus Puhlmann
+ * Matricula: 2910182
+ */
 #include "EnemyShip.hpp"
 #include "../math/transform.hpp"
 #include <iostream>

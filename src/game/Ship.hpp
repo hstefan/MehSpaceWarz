@@ -18,6 +18,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN      *
  * THE SOFTWARE.                                                                  *
  *********************************************************************************/
+/*
+ * Nome: Hugo Stefan Kaus Puhlmann
+ * Matricula: 2910182
+ */
 #ifndef HSTEFAN_SHIP_HPP
 #define HSTEFAN_SHIP_HPP
 
