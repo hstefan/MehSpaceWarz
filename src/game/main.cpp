@@ -28,9 +28,19 @@
 #include <cstdlib>
 #include <GL/glu.h>
 #include "EnemyShip.hpp"
+#include <iostream>
 
 int main()
 {
+   std::cout << "Trabalho 2 CG - Meh Space Warz!" << std::endl;
+   std::cout << "Consiste em movimentacao basica de uma navezinha na tela." << std::endl;
+   std::cout << "A: aumenta marcha da nave" << std::endl;
+   std::cout << "D: diminui marcha da nave" << std::endl;
+   std::cout << "<espaco>: atira" << std::endl;
+   std::cout << "Setas: controlam a nave" << std::endl;
+   std::cout << "obs: cada marcha possui velocidade maxima, aceleracao e frenagem propria." << std::endl;
+
+   std::cout << "Extras: " << "tiro, nave inimiga perseguidora, marchas" << std::endl;
    static const int WINDOW_HEIGHT = 600;
    static const int WINDOW_WIDTH = 600;
    glfwInit();
@@ -48,10 +58,12 @@ int main()
             /2,1), WINDOW_WIDTH, WINDOW_HEIGHT);
    Canon* can = new Canon(WINDOW_WIDTH, WINDOW_HEIGHT);
    EnemyShip* enemy = new EnemyShip(ship, makeVec(200, 200, 1), WINDOW_WIDTH, WINDOW_HEIGHT);
+   //EnemyShip* enemy2 = new EnemyShip(ship, makeVec(550, 550, 1), WINDOW_WIDTH, WINDOW_HEIGHT);
    ship->addCanon(can);
    world->addObject(can);
    world->addObject(ship);
    world->addObject(enemy);
+   //world->addObject(enemy2);
    bool running = true;
 
    double last_render = 0;
@@ -90,6 +102,9 @@ int main()
       glfwSleep(update_interval - (cur_time + glfwGetTime()));
       running = glfwGetWindowParam(GLFW_OPENED) != 0;
    }
-
+   delete world;
+   delete ship;
+   delete enemy;
+   delete can;
    glfwTerminate();
 }
